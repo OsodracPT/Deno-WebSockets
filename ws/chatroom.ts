@@ -6,6 +6,18 @@ import { v4 } from "https://deno.land/std/uuid/mod.ts";
 
 let sockets = new Map<string, WebSocket>();
 
+interface BroadcastObj {
+  name: string;
+  mssg: string;
+}
+
+// broadcast events to all clients
+const broadcastEvent = (obj: BroadcastObj) => {
+  sockets.forEach((ws: WebSocket) => {
+    ws.send(JSON.stringify(obj));
+  });
+};
+
 const chatConnection = async (ws: WebSocket) => {
   // add new ws connection to map
   const uid = v4.generate();
@@ -20,6 +32,7 @@ const chatConnection = async (ws: WebSocket) => {
     // create ev object if ev is string
     if (typeof ev === "string") {
       let evObj = JSON.parse(ev);
+      broadcastEvent(evObj);
     }
   }
 };
