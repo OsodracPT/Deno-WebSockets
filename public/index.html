@@ -86,7 +86,7 @@
         />
         <button>Enter Chat</button>
       </form>
-      <div class="chatroom">
+      <div class="chatroom hidden">
         <ul class="chat-list">
           <li>
             <div class="name">yoshi</div>
@@ -103,6 +103,9 @@
         </form>
       </div>
     </div>
-    <script></script>
+    <script>
+      // new ws connection
+      let ws = new WebSocket("ws://localhost:3000/ws");
+    </script>
   </body>
 </html>
